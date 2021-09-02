@@ -1,0 +1,100 @@
+<%- contentFor( 'body') %>
+
+<div class="jumbotron">
+    <h2>Usuários cadastrados</h2>
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Endereço</th>
+            <th>Idade</th>
+            <th>Altura</th>
+            <th>Vota?</th>
+            <th>Ação</th>
+        </tr>
+        </thead>
+        <tbody>    
+            <% let linkRemove="/cadastro/remove/"; %>
+            <% let linkUpdate="/cadastro/update/"; %>
+            <% for(let index=0;index < users.length;index++){ %>
+                <tr>     
+                <td data-index-row="<%=index%>">
+                    <span  class="show"><%= users[index].name %></span>
+                    <input type="text" name="name"  class="hidden" value="<%= users[index].name %>">
+                </td>
+                <td data-index-row="<%=index%>">
+                    <span  class="show"><%= users[index].email %></span>
+                    <input type="text" name="email"  class="hidden" value="<%= users[index].email %>">
+                </td>
+                <td data-index-row="<%=index%>">
+                    <span  class="show"><%= users[index].address %></span>
+                    <input type="text" name="address"  class="hidden" value="<%= users[index].address %>">
+                </td>
+                <td data-index-row="<%=index%>">
+                    <span  class="show"><%= users[index].age %></span>
+                    <input type="text" name="age"  class="hidden" value="<%= users[index].age %>">
+                </td>
+                <td data-index-row="<%=index%>">
+                    <span  class="show"><%= users[index].height %></span>
+                    <input type="text" name="height"  class="hidden" value="<%= users[index].height %>">   
+                </td>
+                <td data-index-row="<%=index%>">
+                    <span  class="show"><%= users[index].vote %></span>
+                    <input type="text" name="vote" class="hidden" value="<%= users[index].vote %>">      
+                </td>
+                <td data-index-row="<%=index%>" class="hidden">
+                    <input type="button" value="Atualizar" class="hidden" onclick="update('<%=index%>','<%= linkUpdate %>')">
+                </td>
+                <td  data-index-row="<%= index %>">
+                    <a href="#" onclick="update('<%=index%>','<%= linkUpdate %>')" class="show"><i class="fas fa-pen"></i></a>  
+                </td>               
+                <td  data-index-row="<%= index %>">
+                    <a href="#" class="show" onclick="remove('<%=index %>','<%=linkRemove%>')"><i class="fas fa-trash-alt"></i></a>
+                </td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+
+    <div class="add-form" class="hidden">
+        <label for="userName" class="hidden">Nome</label>
+        <input type="text" id="userName" class="hidden">
+        <label for="userEmail" class="hidden">Email</label>
+        <input type="email" id="userEmail" placeholder="email@dominio.com" class="hidden">
+        <label for="userAddress" class="hidden">Endereço</label>
+        <input type="text" id="userAddress" placeholder="Rua, Número" class="hidden">
+        <label for="userAge" class="hidden">Idade</label>
+        <input type="number" id="userAge" min="1" placeholder="Idade" class="hidden">
+        <label for="userHeight" class="hidden">Altura</label>
+        <input type="number" id="userHeight" placeholder="Altura (números)" class="hidden" min="1" step="0.01">
+        <label for="userVote" class="hidden">Vota?</label>
+        <input type="checkbox" id="userVote" placeholder="Vota" class="hidden">
+    </div>
+    <div class="add-form-buttons" class="hidden">
+        <button onclick="addUser()" class="hidden" id="add-form-submit">Adicionar</button>
+        <button onclick="hideAddUserForm()" class="hidden" id="add-form-cancel">Cancelar</button>
+    </div>
+    <a href="#" onclick="showAddUserForm()" id="add-form-call">Cadastrar novo usuário <i class="fas fa-user-plus"></i></a>
+    <br/><br/>
+    <div class="list-header">
+        <h2>Lista de usuários</h2>
+        <a href="#" onclick="list()" id="list-call">Expandir <i class="fas fa-plus"></i></a>
+    </div>
+    
+    <table class="table table-hover hidden" id="list">
+        <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Endereço</th>
+            <th>Idade</th>
+            <th>Altura</th>
+            <th>Vota?</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
