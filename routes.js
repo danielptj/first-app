@@ -31,20 +31,29 @@ router.post('/cadastro/remove',(req,res)=>{
 
 router.post('/cadastro/update',(req,res)=>{
     const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const addressRegex = /([a-zA-Z])\w+,*([a-zA-Z])\w+/;
+    const ageRegex = /^(0?[1-9]|[1-9][0-9]|[1][1-9][1-9]|150)$/;
+    
+
     var isValid = true;
     
     if (!emailRegex.test(req.body.email)) {
         isValid = false;
     }
 
+    if (!addressRegex.test(user.address)) {
+        res.sendStatus(400);
+        return
+    }
+
+    if (!ageRegex.test(req.body.age)) {
+        isValid = false;
+        console.log(req.body.age)
+    }
+
     if (req.body.vote.toLowerCase() != "sim" && req.body.vote.toLowerCase() != "não") {
         isValid = false;
         console.log(">" + req.body.vote + "<")
-    }
-
-    if (typeof req.body.age != 'number') {
-        isValid = false;
-        console.log(req.body.age)
     }
     
     if (isValid) {
@@ -76,7 +85,8 @@ router.post('/cadastro/addUser',(req,res)=>{
     user.vote = req.body.vote;
 
     const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    const addressRegex = /([a-zA-Z])\w+,*([a-zA-Z])\w+/
+    const addressRegex = /([a-zA-Z])\w+,*([a-zA-Z])\w+/;
+    const ageRegex = /^(0?[1-9]|[1-9][0-9]|[1][1-9][1-9]|150)$/;
 
     if (!emailRegex.test(user.email)) {
         res.sendStatus(400);
@@ -86,6 +96,11 @@ router.post('/cadastro/addUser',(req,res)=>{
     if (!addressRegex.test(user.address)) {
         res.sendStatus(400);
         return
+    }
+
+    if (!ageRegex.test(req.body.age)) {
+        isValid = false;
+        console.log(req.body.age)
     }
 
     user.height = Number(user.height).toFixed(2);
